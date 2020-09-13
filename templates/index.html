@@ -1,0 +1,41 @@
+
+<!DOCTYPE html>
+<html>
+	<script>
+		let path= '{{ filename }}';
+		function loadText(){ 
+        var xhr = new XMLHttpRequest(); 
+        xhr.open('GET', path , false); 
+        xhr.onload = function(){ 
+          if(this.status == 200){
+            document.getElementById('data').innerHTML=(this.responseText); 
+          }else{ 
+              document.write('Something went Wrong ' + this.status); 
+          } 
+        } 
+        xhr.send(); 
+      } 
+	</script>
+
+<body onload="loadText()">
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class=flashes>
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+	<form method="post">
+<textarea id="data" name="w3review" rows="40" cols="120">
+{{ request.form['w3review'] }}  </textarea>
+  <br><br>
+ 
+  <input type="submit" value="Validate & Save">
+</form>
+
+
+</body>
+</html>
+
